@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<title>Avaliação – Declamação</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+font-family:Arial, Helvetica, sans-serif;
+background:#93d688;
+margin:0;
+padding:0;
+color:#030303;
+overflow-x:hidden;
+}
+
+
+
+.container{
+max-width:1400px;
+width:98%;
+margin:10px auto;
+background:#93d688;
+border:1px solid #93d688;
+display:none;
+}
+
+.header{
+background:#fff;
+border-bottom:3px solid #4a7a41;
+padding:10px;
+overflow:hidden;
+}
+
+.header img{
+max-width:100%;
+height:auto;
+display:block;
+}
+
+#telaLogin{
+max-width:400px;
+width:90%;
+margin:80px auto;
+background:#fff;
+padding:20px;
+border:2px solid #3d6b35;
+text-align:center;
+border-radius:8px;
+}
+
+#telaLogin img{max-width:100%;height:auto}
+
+#telaLogin input{
+width:90%;
+padding:10px;
+margin:10px 0;
+border:1px solid #6a9161;
+border-radius:4px;
+font-size:16px;
+}
+
+#telaLogin button{
+background:#5f9553;
+color:#fff;
+border:none;
+border-radius:6px;
+padding:10px 40px;
+cursor:pointer;
+font-weight:bold;
+font-size:16px;
+transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+#telaLogin button:hover{
+background:#4a7a41;
+transform:translateY(-2px);
+box-shadow:0 4px 10px rgba(74,122,65,0.35);
+}
+
+#telaLogin button:active{
+transform:translateY(0);
+box-shadow:none;
+}
+
+.linha{
+display:grid;
+grid-template-columns:repeat(5, 1fr);
+gap:5px;
+padding:8px;
+background:#fff;
+border-bottom:1px solid #cfd9cb;
+color:#333333;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(4, 1fr);
+gap:8px;
+padding:6px;
+}
+
+.box{
+border:1px solid #cfd9cb;
+background:#fff;
+padding:8px;
+font-size:13px;
+border-radius:4px;
+}
+
+.box h3{
+text-align:center;
+margin:0 0 8px;
+padding-bottom:6px;
+color:#345c2c;
+border-bottom:2px solid #4a7a41;
+}
+
+.box h4{
+text-align:center;
+margin:0 0 8px;
+padding-bottom:6px;
+font-weight:normal;
+color:#ff0000;
+}
+
+.box h5{
+text-align:center;
+margin:0 0 8px;
+padding-bottom:18px;
+font-weight:normal;
+font-size:18px;
+color:#ff0000;
+}
+
+
+.box h3:nth-of-type(2){
+border-bottom:none;
+margin-top:-6px;
+font-size:12px;
+font-weight:normal;
+color:#5a5a5a;
+}
+
+.texto-interp{
+text-align:center;
+font-size:13px;
+line-height:1.4;
+color:#5a5a5a;
+}
+
+textarea{
+width:100%;
+height:90px;
+border:1px solid #6a9161;
+border-radius:4px;
+font-family:inherit;
+padding:4px;
+resize:vertical;
+line-height:1.4;
+}
+
+.notaFinal{
+font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#345c2c;
+}
+
+select,input{
+width:100%;
+border:1px solid #6a9161;
+border-radius:4px;
+padding:6px;
+font-family:inherit;
+}
+
+.linha-nota{
+display:flex;
+align-items:center;
+gap:6px;
+margin-bottom:6px;
+flex-wrap:wrap;
+}
+
+.linha-nota .pontilhado{
+flex:1;
+min-width:20px;
+border-bottom:1px dotted #b8c3b3;
+}
+
+.linha-check{
+margin-bottom:4px;
+}
+
+.linha-check label{
+display:flex;
+align-items:center;
+gap:6px;
+cursor:pointer;
+}
+
+.linha-check input[type="checkbox"]{
+width:16px;
+height:16px;
+flex:none;
+accent-color:#4a7a41;
+}
+
+.input-nota{
+width:60px;
+text-align:center;
+}
+
+.resumo-direita{
+display:flex;
+justify-content:space-between;
+font-weight:bold;
+margin-top:6px;
+border-top:1px solid #cfd9cb;
+padding-top:4px;
+color:#345c2c;
+}
+
+.grid-inferior{
+display:grid;
+grid-template-columns:1.6fr 2.4fr 0.8fr;
+gap:6px;
+padding:6px;
+}
+
+.grid-rodape{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:6px;
+padding:6px;
+}
+
+.btns{
+display:flex;
+justify-content:center;
+padding:15px;
+gap:20px;
+flex-wrap:wrap;
+}
+
+button{
+padding:12px 30px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+border-radius:6px;
+transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn-salvar,
+.btn-logout{
+min-width:180px;
+text-align:center;
+}
+
+.btn-salvar{
+background:#4a7a41;
+color:#fff;
+border:1px solid #3d6b35;
+}
+
+.btn-salvar:hover{
+background:#3d6b35;
+transform:translateY(-2px);
+box-shadow:0 4px 12px rgba(61,107,53,0.4);
+}
+
+.btn-logout{
+background:#d9463b;
+color:#fff;
+border:1px solid #b5352b;
+font-size:16px!important;
+padding:12px 30px!important;
+}
+
+.btn-logout:hover{
+background:#b5352b;
+transform:translateY(-2px);
+box-shadow:0 4px 12px rgba(181,53,43,0.4);
+}
+
+.btn-salvar:active,
+.btn-logout:active{
+transform:translateY(0);
+box-shadow:none;
+}
+
+.overlay-loading{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.45);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+.overlay-loading.ativo{
+display:flex;
+}
+
+.overlay-caixa{
+background:#fff;
+padding:30px 40px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 8px 30px rgba(0,0,0,0.3);
+}
+
+.overlay-spinner{
+width:48px;
+height:48px;
+border:5px solid #cfd9cb;
+border-top:5px solid #4a7a41;
+border-radius:50%;
+margin:0 auto 15px;
+animation:girar 0.8s linear infinite;
+}
+
+.overlay-texto{
+font-weight:bold;
+color:#345c2c;
+font-size:15px;
+}
+
+@keyframes girar{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
+footer{
+text-align:center;
+margin-top:20px;
+font-size:12px;
+color:#030303;
+padding-bottom:20px;
+}
+
+/* ===== Responsividade ===== */
+@media (max-width: 1000px){
+.grid{
+grid-template-columns:repeat(2, 1fr);
+}
+}
+
+@media (max-width: 800px){
+.grid{
+grid-template-columns:1fr;
+}
+.grid-inferior{
+grid-template-columns:1fr;
+}
+.grid-rodape{
+grid-template-columns:1fr;
+}
+}
+
+@media (max-width: 600px){
+.linha{
+grid-template-columns:1fr 1fr;
+}
+.header{
+grid-template-columns:1fr!important;
+text-align:center;
+}
+.header img{
+margin:0 auto 5px;
+display:block;
+}
+.btns{
+flex-direction:column;
+align-items:stretch;
+}
+button{
+width:100%;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div id="telaLogin">
+    <img src="https://raw.githubusercontent.com/NossoEventoRS/Imagens/refs/heads/main/Logo.png" height="100">
+    <h2>Acesso Avaliador</h2>
+    <input type="text" id="userLogin" placeholder="Usuário (Ex: AV1)">
+    <input type="password" id="passLogin" placeholder="Senha">
+    <button onclick="fazerLogin()" id="btnLogin">ENTRAR</button>
+</div>
+
+<div id="appContainer" class="container">
+    <div class="header" style="display:grid;grid-template-columns:100px 1fr 100px;align-items:center">
+        <img src="https://raw.githubusercontent.com/NossoEventoRS/Imagens/refs/heads/main/Logo.png" height="70">
+        <div style="text-align:center">
+            <strong>MTG – MOVIMENTO TRADICIONALISTA GAÚCHO</strong><br>
+           Nosso Evento RS<br>
+Seu evento Nossa Missão<br>
+            <strong>Planilha de Avaliação – Declamação</strong>
+        </div>
+        <img src="https://raw.githubusercontent.com/NossoEventoRS/Imagens/refs/heads/main/Logo.png" height="70">
+    </div>
+
+    <div style="padding:8px;background:#fff;border-bottom:1px solid #cfd9cb">
+        <select id="codCandidato">
+            <option value="">Selecione CÓDIGO do candidato *</option>
+        </select>
+    </div>
+
+    <div class="linha">
+        <div>Categoria:<br><b id="categoria"></b></div>
+        <div>Concorrente:<br><b id="concorrente"></b></div>
+        <div>Entidade:<br><b id="entidade"></b></div>
+        <div>Município:<br><b id="municipio"></b></div>
+        <div>RT:<br><b id="rt"></b></div>
+    </div>
+
+    <div style="padding:8px;background:#fff;border-bottom:1px solid #cfd9cb">
+        <b>Poema:</b><br>
+        <input id="poema" type="text">
+    </div>
+
+    <div class="grid">
+    <div class="box">
+        <h3>Fundamento da Voz (3,000)</h3>
+        <h3>(Critérios)</h3>
+        <div class="linha-check"><label><input type="checkbox" id="voz1chk" onchange="toggleCriterio(this,'obsVoz','Dicção (articulação clara das palavras)')"> Dicção (articulação clara das palavras)</label></div>
+        <div class="linha-check"><label><input type="checkbox" id="voz2chk" onchange="toggleCriterio(this,'obsVoz','Impostação (projeção natural e controle da voz)')"> Impostação (projeção natural e controle da voz)</label></div>
+        <div class="linha-check"><label><input type="checkbox" id="voz3chk" onchange="toggleCriterio(this,'obsVoz','Inflexão (variação e intensidade da voz, ritmo e fluidez vocal)')"> Inflexão (variação e intensidade da voz, ritmo e fluidez vocal)</label></div>
+        <div class="linha-nota"><span class="texto">Desconto do quadrante</span><span class="pontilhado"></span><input id="descVozTotal" class="input-nota" data-base="3.0" oninput="limitarDescontoDigitacao(this)" onblur="aplicarDescontoQuadrante(this,'notaVoz')"></div>
+        <div class="resumo-direita"><span>DESC: <b id="descVoz">0,000</b></span><span>Nota: <b id="notaVoz">3,000</b></span></div>
+        <textarea id="obsVoz" placeholder="Obs Voz"></textarea><p>
+        <p><h5 style="display: inline;"><b>⌧&emsp;</b></h5><h4 style="display: inline;"><em>Sinalização sobre a ótica de cada avaliador do(s) critério(s) que pode(m) ser aprofundado(s) ou explorado(s).</em></h4></p>
+    </div>
+
+        <div class="box">
+        <h3>Expressão Corporal (2,000)</h3>
+        <h3> (Critérios)</h3>
+        <div class="linha-check"><label><input type="checkbox" id="exp1chk" onchange="toggleCriterio(this,'obsExp','Expressividade Gestual')"> Expressividade Gestual</label></div>
+        <div class="linha-check"><label><input type="checkbox" id="exp2chk" onchange="toggleCriterio(this,'obsExp','Expressividade Facial')"> Expressividade Facial</label></div>
+        <div class="linha-check"><label><input type="checkbox" id="exp3chk" onchange="toggleCriterio(this,'obsExp','Espontaneidade/Naturalidade')"> Espontaneidade/Naturalidade</label></div>
+        <div class="linha-check"><label><input type="checkbox" id="exp4chk" onchange="toggleCriterio(this,'obsExp','Postura cênica')"> Postura cênica</label></div>
+        <div class="linha-nota"><span class="texto">Desconto do quadrante</span><span class="pontilhado"></span><input id="descExpTotal" class="input-nota" data-base="2.0" oninput="limitarDescontoDigitacao(this)" onblur="aplicarDescontoQuadrante(this,'notaExp')"></div>
+        <div class="resumo-direita"><span>DESC: <b id="descExp">0,000</b></span><span>Nota: <b id="notaExp">2,000</b></span></div>
+        <textarea id="obsExp" placeholder="Obs Expressão"></textarea>
+    <p><h5 style="display: inline;"><b>⌧&emsp;</b></h5><h4 style="display: inline;"><em>Sinalização sobre a ótica de cada avaliador do(s) critério(s) que pode(m) ser aprofundado(s) ou explorado(s).</em></h4></p>
+    </div>
+
+       <div class="box">
+        <h3>Interpretação (4,000)</h3>
+        <h3>(Critérios)</h3>
+        <div class="linha-check"><label><input type="checkbox" id="int1chk" onchange="toggleCriterio(this,'obsInter','Compreensão textual')"> Compreensão textual</label></div>
+        <div class="linha-check"><label><input type="checkbox" id="int2chk" onchange="toggleCriterio(this,'obsInter','Consciência poética')"> Consciência poética</label></div>
+        <div class="linha-check"><label><input type="checkbox" id="int3chk" onchange="toggleCriterio(this,'obsInter','Presença de palco')"> Presença de palco</label></div>
+        <div class="linha-check"><label><input type="checkbox" id="int4chk" onchange="toggleCriterio(this,'obsInter','Conjunto da obra')"> Conjunto da obra</label></div>
+        <div class="linha-nota"><span class="texto">Desconto do quadrante</span><span class="pontilhado"></span><input id="descIntTotal" class="input-nota" data-base="4.0" oninput="limitarDescontoDigitacao(this)" onblur="aplicarDescontoQuadrante(this,'notaInter')"></div>
+        <div class="resumo-direita"><span>DESC: <b id="descInt">0,000</b></span><span>Nota: <b id="notaInter">4,000</b></span></div>
+        <textarea id="obsInter" placeholder="Obs Interpretação"></textarea>
+    <p><h5 style="display: inline;"><b>⌧&emsp;</b></h5><h4 style="display: inline;"><em>Sinalização sobre a ótica de cada avaliador do(s) critério(s) que pode(m) ser aprofundado(s) ou explorado(s).</em></h4></p>
+    </div>
+        
+   <div class="box">
+        <h3>Fidelidade ao Texto (1,000)</h3>
+        <h3>(Critérios)</h3>
+        <div class="linha-check"><label><input type="checkbox" id="fid1chk" onchange="toggleCriterio(this,'obsFid','Letra / Palavra')"> Letra / Palavra</label></div>
+        <div class="linha-check"><label><input type="checkbox" id="fid2chk" onchange="toggleCriterio(this,'obsFid','Verso / Estrofe')"> Verso / Estrofe</label></div>
+        <div class="linha-check"><label><input type="checkbox" id="fid3chk" onchange="toggleCriterio(this,'obsFid','Esqueceu / Lembrado')"> Esqueceu / Lembrado</label></div>
+        <div class="linha-check"><label><input type="checkbox" id="fid4chk" onchange="toggleCriterio(this,'obsFid','Não seguiu ordem do texto poético')"> Não seguiu ordem do texto poético</label></div>
+        <div class="linha-check"><label><input type="checkbox" id="fid5chk" onchange="toggleCriterio(this,'obsFid','Não concluiu a apresentação')"> Não concluiu a apresentação</label></div>
+        <div class="linha-nota"><span class="texto">Desconto do quadrante</span><span class="pontilhado"></span><input id="descFidTotal" class="input-nota" data-base="1.0" oninput="limitarDescontoDigitacao(this)" onblur="aplicarDescontoQuadrante(this,'notaFid')"></div>
+        <div class="resumo-direita"><span>DESC: <b id="descFid">0,000</b></span><span>Nota: <b id="notaFid">1,000</b></span></div>
+        <textarea id="obsFid" placeholder="Obs Fidelidade"></textarea>
+        <p><h5 style="display: inline;"><b>⌧&emsp;</b></h5><h4 style="display: inline;"><em>Sinalização sobre a ótica de cada avaliador do(s) critério(s) que pode(m) ser aprofundado(s) ou explorado(s).</em></h4></p>
+    </div>
+
+ </div>
+    <div class="grid-inferior">
+    <div class="box">
+        <b>Descontos:</b><br>
+        <div class="linha-nota"><span class="texto">Tempo 9 min (desc. 1,000 p/ min): </span><span class="pontilhado"></span><input id="descTempo" class="input-nota" oninput="limitarDecimal(this)" onblur="this.value = v(this.id).toFixed(3).replace('.', ',')"></div>
+        <div class="linha-nota"><span class="texto">Indumentária (até 2,000): </span><span class="pontilhado"></span><input id="descInd" class="input-nota" oninput="limitarDecimal(this, 2.0)" onblur="this.value = v(this.id).toFixed(3).replace('.', ',')"></div>
+    </div>
+        <div class="box"><b>Observações Gerais:</b><textarea id="obsGeral" placeholder="Obs Gerais"></textarea></div>
+    <div class="box notaFinal">Nota Final<br><span id="notaFinal">10,000</span></div>
+</div>
+
+    <div class="grid-rodape">
+        <div class="box">Data/Hora: <span id="data"></span></div>
+        <div class="box">Avaliador: <b id="nomeExibicao"></b></div>
+    </div>
+
+    <div class="btns">
+        <button onclick="logout()" class="btn-logout">Sair</button>
+        <button onclick="salvar()" class="btn-salvar">SALVAR AVALIAÇÃO</button>
+    </div>
+</div>
+
+<div id="overlayLoading" class="overlay-loading">
+<div class="overlay-caixa">
+<div class="overlay-spinner"></div>
+<div class="overlay-texto">Aguarde, finalizando envio...</div>
+</div>
+</div>
+
+<footer>
+  Sistema de Avaliação - Produzido por NossoEventoRS © - Conforme Regulamento Artístico do MTG (2026)
+</footer>
+
+<script>
+const URL = "https://script.google.com/macros/s/AKfycbzlqgZA0_DZsTe1veTXIM2nFQRYyWK_LZUafhi_6hP9uOU-FrWvdHhQlQHSLvM-0dPe/exec";
+
+window.onload = () => {
+    const userLogado = localStorage.getItem("avaliadorDados");
+    if(userLogado) exibirSistema(JSON.parse(userLogado));
+};
+
+function fazerLogin() {
+    const u = document.getElementById("userLogin").value;
+    const p = document.getElementById("passLogin").value;
+    const btn = document.getElementById("btnLogin");
+    if(!u || !p) { alert("Preencha tudo!"); return; }
+    btn.disabled = true; btn.innerText = "VERIFICANDO...";
+    fetch(`${URL}?acao=login&user=${u}&pass=${p}`)
+    .then(r => r.json()).then(res => {
+        if(res.status === "OK") {
+            localStorage.setItem("avaliadorDados", JSON.stringify(res));
+            exibirSistema(res);
+        } else {
+            alert(res.msg); btn.disabled = false; btn.innerText = "ENTRAR";
+        }
+    }).catch(() => { alert("Erro de conexão"); btn.disabled = false; btn.innerText = "ENTRAR"; });
+}
+
+function exibirSistema(dados) {
+    document.getElementById("telaLogin").style.display = "none";
+    document.getElementById("appContainer").style.display = "block";
+    document.getElementById("nomeExibicao").innerText = dados.nome || "Avaliador";
+    carregarCandidatos();
+    document.getElementById("data").innerText = new Date().toLocaleString("pt-BR");
+}
+
+function logout() {
+    if(confirm("Encerrar sessão?")) { localStorage.removeItem("avaliadorDados"); location.reload(); }
+}
+
+function limitarDecimal(campo, max) {
+    // Substitui vírgula por ponto para validar o número
+    let valor = campo.value.replace(',', '.').replace(/[^0-9.]/g, '');
+    let num = parseFloat(valor);
+
+    // Se houver um máximo definido e o número for maior que ele
+    if (max !== undefined && !isNaN(num) && num > max) {
+        alert("Atenção: O desconto máximo para este campo é " + max.toFixed(3).replace('.', ','));
+        campo.value = max.toFixed(3).replace('.', ',');
+    } else {
+        // Apenas limpa caracteres inválidos enquanto digita
+        campo.value = valor.replace('.', ',');
+    }
+    calc();
+}
+
+function formatar(campo) {
+    let n = parseFloat(campo.value.replace(',', '.'));
+    if (isNaN(n)) {
+        campo.value = "0,000";
+    } else {
+        campo.value = n.toFixed(3).replace('.', ',');
+    }
+    calc(); // Garante o cálculo final após perder o foco
+}
+
+function v(id) {
+    const el = document.getElementById(id);
+    if (!el) return 0;
+    if (el.tagName === "INPUT") return parseFloat(String(el.value).replace(',', '.')) || 0;
+    return parseFloat(String(el.innerText).replace(',', '.')) || 0;
+}
+
+const PISO_NOTA = 0.010;
+
+// Marca/desmarca um critério: adiciona ou remove o nome do critério nas observações do quadrante.
+// Não afeta nenhum cálculo — é só registro de referência para o avaliador.
+function toggleCriterio(chk, obsId, texto) {
+    const obs = document.getElementById(obsId);
+    const SEP = ' | ';
+    let itens = obs.value.split(SEP).map(i => i.trim()).filter(i => i !== '');
+    if (chk.checked) {
+        if (!itens.includes(texto)) itens.push(texto);
+    } else {
+        itens = itens.filter(i => i !== texto);
+    }
+    obs.value = itens.join(SEP);
+}
+
+// Limpa caracteres inválidos enquanto o avaliador digita o desconto do quadrante (o aviso de limite só dispara ao sair do campo).
+function limitarDescontoDigitacao(campo) {
+    let valor = campo.value.replace(',', '.').replace(/[^0-9.]/g, '');
+    campo.value = valor.replace('.', ',');
+    calc();
+}
+
+// Aplica o desconto de um quadrante: Nota = base - desconto, nunca podendo ficar em 0 (piso de 0,010).
+function aplicarDescontoQuadrante(campo, notaId) {
+    const base = parseFloat(campo.dataset.base);
+    let desconto = parseFloat(campo.value.replace(',', '.'));
+    if (isNaN(desconto) || desconto < 0) desconto = 0;
+
+    campo.value = desconto.toFixed(3).replace('.', ',');
+
+    let nota = base - desconto;
+    if (nota <= 0) {
+        alert("Atenção: o desconto informado (" + desconto.toFixed(3).replace('.', ',') + ") ultrapassa o limite deste quadrante (máx. " + base.toFixed(3).replace('.', ',') + "). A nota foi travada no mínimo de 0,010.");
+        nota = PISO_NOTA;
+    }
+
+    document.getElementById(notaId).innerText = nota.toFixed(3).replace('.', ',');
+    calc();
+}
+
+function calc() {
+    document.getElementById("descVoz").innerText = v('descVozTotal').toFixed(3).replace('.', ',');
+    document.getElementById("descExp").innerText = v('descExpTotal').toFixed(3).replace('.', ',');
+    document.getElementById("descInt").innerText = v('descIntTotal').toFixed(3).replace('.', ',');
+    document.getElementById("descFid").innerText = v('descFidTotal').toFixed(3).replace('.', ',');
+
+    const notaVoz = v('notaVoz');
+    const notaExp = v('notaExp');
+    const notaInter = v('notaInter');
+    const notaFid = v('notaFid');
+
+    let final = notaVoz + notaExp + notaInter + notaFid - v('descTempo') - v('descInd');
+    if (final <= 0) final = PISO_NOTA;
+
+    document.getElementById("notaFinal").innerText = final.toFixed(3).replace('.', ',');
+}
+
+let candidatos = [];
+function carregarCandidatos() {
+    fetch(URL + "?acao=candidatos").then(r => r.json()).then(lista => {
+        candidatos = lista;
+        const sel = document.getElementById("codCandidato");
+        sel.innerHTML = `<option value="">Selecione CÓDIGO *</option>`;
+        lista.forEach(c => sel.innerHTML += `<option value="${c.codigo}">${c.codigo}</option>`);
+    });
+}
+
+document.getElementById("codCandidato").onchange = function() {
+    const c = candidatos.find(x => String(x.codigo) === String(this.value));
+    if(!c) return;
+    ["categoria","concorrente","entidade","municipio","rt"].forEach(id => document.getElementById(id).innerText = c[id] || "");
+};
+
+function salvar() {
+    const user = JSON.parse(localStorage.getItem("avaliadorDados"));
+    if (!document.getElementById("codCandidato").value) { alert("Selecione o candidato!"); return; }
+
+    const btn = document.querySelector(".btn-salvar");
+    btn.disabled = true; btn.innerText = "SALVANDO...";
+    document.getElementById("overlayLoading").classList.add("ativo");
+
+    const payload = {
+        usuarioLogin: user.usuario,
+        avaliadorNome: user.nome,
+        cod: document.getElementById("codCandidato").value,
+        categoria: document.getElementById("categoria").innerText,
+        concorrente: document.getElementById("concorrente").innerText,
+        entidade: document.getElementById("entidade").innerText,
+        municipio: document.getElementById("municipio").innerText,
+        rt: document.getElementById("rt").innerText,
+        poema: document.getElementById("poema").value,
+
+        descVoz: v('descVozTotal'), notaVoz: v('notaVoz'), obsVoz: document.getElementById("obsVoz").value,
+        descExp: v('descExpTotal'), notaExp: v('notaExp'), obsExp: document.getElementById("obsExp").value,
+        descInt: v('descIntTotal'), notaInter: v('notaInter'), obsInter: document.getElementById("obsInter").value,
+        descFid: v('descFidTotal'), notaFid: v('notaFid'), obsFid: document.getElementById("obsFid").value,
+
+        descTempo: v('descTempo'), descInd: v('descInd'), obsGeral: document.getElementById("obsGeral").value,
+        notaFinal: document.getElementById("notaFinal").innerText,
+        data: document.getElementById("data").innerText
+    };
+
+    fetch(URL, { method: "POST", body: JSON.stringify(payload) })
+    .then(() => { alert("Avaliação Processada!"); limparFormulario(); })
+    .catch(() => { alert("Avaliação Processada!"); limparFormulario(); });
+}
+
+function limparFormulario() {
+    const btn = document.querySelector(".btn-salvar");
+    btn.disabled = false; 
+    btn.innerText = "SALVAR AVALIAÇÃO";
+    document.getElementById("overlayLoading").classList.remove("ativo");
+
+    // 1. Reseta o Select de Candidatos
+    document.getElementById("codCandidato").value = "";
+
+    // 2. Limpa todos os Inputs de texto e números
+    document.querySelectorAll("input[type='text']").forEach(i => { i.value = ""; });
+    document.querySelectorAll(".input-nota").forEach(i => { i.value = ""; });
+
+    // 2b. Desmarca todos os checkboxes de critérios
+    document.querySelectorAll("input[type='checkbox']").forEach(c => { c.checked = false; });
+
+    // 3. Limpa todas as Áreas de Texto (Observações)
+    document.querySelectorAll("textarea").forEach(t => {
+        t.value = "";
+    });
+
+    // 4. Limpa os textos de identificação do candidato
+    ["concorrente","categoria","entidade","municipio","rt"].forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.innerText = "";
+    });
+
+    // 5. Reseta os labels de descontos para o padrão
+    ["descVoz","descExp","descInt","descFid"].forEach(id => {
+        document.getElementById(id).innerText = "0,000";
+    });
+
+    // 6. Reseta as notas base e a nota final
+    document.getElementById("notaVoz").innerText = "3,000";
+    document.getElementById("notaExp").innerText = "2,000";
+    document.getElementById("notaInter").innerText = "4,000";
+    document.getElementById("notaFid").innerText = "1,000";
+    document.getElementById("notaFinal").innerText = "10,000";
+
+    // 7. Atualiza a data/hora para o momento do novo atendimento
+    document.getElementById("data").innerText = new Date().toLocaleString("pt-BR");
+
+    // 8. Volta para o topo da página para facilitar o novo preenchimento
+    window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
